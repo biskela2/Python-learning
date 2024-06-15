@@ -1,0 +1,80 @@
+# Dados de exemplo
+pacientes = [
+    {"id": 1, "nome": "Maria Silva", "idade": 35, "sexo": "Feminino", "endereco": "Rua das Flores, 123", "telefone": "(11) 9999-8888"},
+    {"id": 2, "nome": "João Souza", "idade": 45, "sexo": "Masculino", "endereco": "Av. Principal, 456", "telefone": "(11) 7777-6666"}
+]
+
+medicos = [
+    {"id": 1, "nome": "Dr. Carlos Oliveira", "especialidade": "Cardiologia", "hospital": "Hospital Central", "telefone": "(11) 8888-7777"},
+    {"id": 2, "nome": "Dra. Ana Santos", "especialidade": "Pediatria", "hospital": "Hospital Infantil", "telefone": "(11) 5555-4444"}
+]
+
+consultas = []
+
+# Função para listar todos os pacientes
+def listar_pacientes():
+    print("Pacientes:")
+    for paciente in pacientes:
+        print(f"{paciente['id']}: {paciente['nome']}")
+
+# Função para listar todos os médicos
+def listar_medicos():
+    print("Médicos:")
+    for medico in medicos:
+        print(f"{medico['id']}: {medico['nome']}")
+
+# Função para marcar uma consulta
+def marcar_consulta():
+    print("Marcar Consulta:")
+    listar_pacientes()
+    id_paciente = int(input("Selecione o ID do paciente: "))
+    listar_medicos()
+    id_medico = int(input("Selecione o ID do médico: "))
+    data_consulta = input("Informe a data da consulta (DD/MM/AAAA): ")
+    descricao = input("Descreva a consulta: ")
+    custo = float(input("Informe o custo da consulta: R$ "))
+    
+    consulta = {
+        "id": len(consultas) + 1,
+        "data_consulta": data_consulta,
+        "id_paciente": id_paciente,
+        "id_medico": id_medico,
+        "descricao": descricao,
+        "custo": custo
+    }
+    consultas.append(consulta)
+    print("Consulta marcada com sucesso!")
+
+# Função para listar todas as consultas marcadas
+def listar_consultas():
+    print("Consultas Marcadas:")
+    for consulta in consultas:
+        paciente_nome = next(p['nome'] for p in pacientes if p['id'] == consulta['id_paciente'])
+        medico_nome = next(m['nome'] for m in medicos if m['id'] == consulta['id_medico'])
+        print(f"ID: {consulta['id']}, Data: {consulta['data_consulta']}, Paciente: {paciente_nome}, Médico: {medico_nome}, Descrição: {consulta['descricao']}, Custo: R${consulta['custo']:.2f}")
+
+# Exemplo de utilização
+if __name__ == "__main__":
+    while True:
+        print("\nMenu:")
+        print("1. Listar Pacientes")
+        print("2. Listar Médicos")
+        print("3. Marcar Consulta")
+        print("4. Listar Consultas Marcadas")
+        print("5. Sair")
+        
+        opcao = input("Escolha uma opção: ")
+        
+        if opcao == "1":
+            listar_pacientes()
+        elif opcao == "2":
+            listar_medicos()
+        elif opcao == "3":
+            marcar_consulta()
+        elif opcao == "4":
+            listar_consultas()
+        elif opcao == "5":
+            print("Encerrando o programa...")
+            break
+        else:
+            print("Opção inválida. Tente novamente.")
